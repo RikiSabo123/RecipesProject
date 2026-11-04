@@ -1,17 +1,13 @@
 const jwt = require('jsonwebtoken')
 
 exports.login = async (req, res) => {
-    const user = req.body
-    const { id, firstName, lastName } = user;
+    const { id, firstName, lastName } = req.body;
 
     if (!id || !firstName || !lastName) {
-        res.status(400).json({ message: 'All fields are required' })
+        return res.status(400).json({ message: 'All fields are required' })
     }
-    const myUser = {
-        id: user.id,
-        firstName: user.firstName,
-        lastName:user.lastName
-    }
-    const myToken = jwt.sign(myUser,process.env.ACCESS_TOKEN_SECRET)
-    res.send(myToken)
+
+    const payload = { id, firstName, lastName }
+    const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' })
+    res.json({ accessToken: token })
 }

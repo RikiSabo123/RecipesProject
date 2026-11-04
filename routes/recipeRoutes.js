@@ -1,12 +1,22 @@
 const express = require('express');
-const verifyJWT = require("../middleware/authMiddleware")
+const verifyJWT = require('../middleware/authMiddleware')
+const {
+    getAllRecipes,
+    getRecipe,
+    addRecipe,
+    updateRecipe,
+    deleteRecipe
+} = require('../controllers/recipeController')
 
 const router = express.Router();
-const {addRecipe, getRecipe, deleteRecipe, updateRecipe} = require('../controllers/recipeController')
 
-router.post('/addRecipe',addRecipe);
-router.get('/getRecipe',getRecipe);
-router.delete('/deleteRecipe',deleteRecipe);
-router.put('/updateRecipe',updateRecipe);
+// Public read endpoints
+router.get('/', getAllRecipes);
+router.get('/:id', getRecipe);
+
+// Write endpoints require a valid JWT
+router.post('/', verifyJWT, addRecipe);
+router.put('/:id', verifyJWT, updateRecipe);
+router.delete('/:id', verifyJWT, deleteRecipe);
 
 module.exports = router
