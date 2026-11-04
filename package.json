@@ -1,10 +1,11 @@
 {
   "name": "recipes",
   "version": "1.0.0",
-  "description": "",
+  "description": "Recipes REST API with JWT authentication - Node.js, Express, MongoDB",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "node --watch app.js"
   },
   "author": "",
   "license": "ISC",
